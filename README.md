@@ -2,7 +2,6 @@
 
 ## TODO
 
-- [ ] tower and tower layer for create root span
 - [ ] otel-layer
 - [ ] collector-contirb submodule
 - [ ] collector
@@ -14,6 +13,16 @@
 - [ ] goose
 - [ ] Sampling
 - [ ] Overview image
+
+## Usage
+
+```sh
+# Run graphql server
+cargo make graphql:run
+
+# Run opentelemetry-collector-contrib
+cargo make collector:run
+```
 
 
 ## Tasks
