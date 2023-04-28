@@ -1,0 +1,50 @@
+[env]
+GRAPHQL_HOST = "http://localhost:8000"
+GRAPHQL_ENDPOINT = "${GRAPHQL_HOST}/graphql"
+GRAPHQL_PROJECT = "rust/client"
+GRAPHQL_SCHEMA_PATH = "${GRAPHQL_PROJECT}/schema.json"
+GRAPHQL_QUERY_PATH = "${GRAPHQL_PROJECT}/query.gql"
+GRAPHQL_GENERATE_PATH = "${GRAPHQL_PROJECT}/src/generated"
+
+[tasks."graphql:schema"]
+command = "graphql-client"
+install_crate = {  crate_name = "graphql_client_cli",  binary = "graphql-client",  test_arg = "--version",  min_version = "0.12.0" }
+args = ["introspect-schema", "${GRAPHQL_ENDPOINT}"]
+
+[tasks."graphql:schema:update"]
+script = '''
+cargo make --quiet graphql:schema > "${GRAPHQL_SCHEMA_PATH}"
+echo "Update graphql schema ${GRAPHQL_SCHEMA_PATH}" 
+'''
+
+[tasks."graphql:generate"]
+command = "graphql-client"
+args = [
+  "generate", 
+  "--schema-path", "${GRAPHQL_SCHEMA_PATH}",
+  "--output-directory", "${GRAPHQL_GENERATE_PATH}",
+  "${GRAPHQL_QUERY_PATH}"
+]
+
+[tasks."request:healthcheck"]
+cwd = "rust/client"
+command = "cargo"
+args = [
+  "run", "--",
+  "--host", "${GRAPHQL_HOST}", 
+  "--users","1",
+  "--iterations", "1", 
+  "--scenarios", "Healthcheck",
+]
+
+[tasks."request:scenario"]
+cwd = "rust/client"
+command = "cargo"
+args = [
+  "run", "--",
+  "--host", "${GRAPHQL_HOST}", 
+  "--users","1",
+  "--iterations", "1", 
+  "--scenarios", "${SCENARIO}",
+]
+

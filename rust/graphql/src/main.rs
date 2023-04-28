@@ -1,7 +1,9 @@
+use axum::Extension;
 use graphql::handlers;
 use graphql::prelude::*;
 
 use axum::Router;
+use graphql::schema::QueryRoot;
 
 fn init_subscriber() {
     use tracing_subscriber::{filter, fmt, layer::SubscriberExt, util::SubscriberInitExt};
@@ -9,13 +11,24 @@ fn init_subscriber() {
     tracing_subscriber::registry::Registry::default()
         .with(fmt::layer().with_ansi(true))
         .with(filter::LevelFilter::INFO)
+        .with(tracing_opentelemetry::layer().with_tracer(
+            opentelemetry::sdk::export::trace::stdout::new_pipeline().install_simple(),
+        ))
         .init();
 }
 
 fn app() -> Router {
-    use axum::routing::get;
+    use async_graphql::{extensions::Tracing, EmptyMutation, EmptySubscription, Schema};
+    use axum::routing::{get, post};
 
-    Router::new().route("/health_check", get(handlers::health_check))
+    let schema = Schema::build(QueryRoot, EmptyMutation, EmptySubscription)
+        .extension(Tracing)
+        .finish();
+
+    Router::new()
+        .route("/health_check", get(handlers::health_check))
+        .route("/graphql", post(handlers::graphql))
+        .layer(Extension(schema))
 }
 
 #[tokio::main]
