@@ -1,9 +1,6 @@
 use axum::Extension;
-use graphql::handlers;
-use graphql::prelude::*;
-
 use axum::Router;
-use graphql::schema::QueryRoot;
+use graphql::{client, handlers, otel, prelude::*, schema::QueryRoot};
 
 fn init_subscriber() {
     use tracing_subscriber::{filter, fmt, layer::SubscriberExt, util::SubscriberInitExt};
@@ -59,8 +56,11 @@ fn app() -> Router {
     use axum::routing::{get, post};
     use tower_http::trace::{DefaultMakeSpan, TraceLayer};
 
+    let rest_client = client::RestClient::new();
+
     let schema = Schema::build(QueryRoot, EmptyMutation, EmptySubscription)
         .extension(Tracing)
+        .data(rest_client)
         .finish();
 
     let middleware = tower::ServiceBuilder::new()
@@ -75,6 +75,7 @@ fn app() -> Router {
 
 #[tokio::main]
 async fn main() {
+    let _guard = otel::init_opentelemetry();
     init_subscriber();
 
     let app = app();

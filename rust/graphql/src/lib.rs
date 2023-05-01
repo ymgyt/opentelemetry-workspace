@@ -1,4 +1,6 @@
+pub mod client;
 pub mod handlers;
+pub mod otel;
 pub mod schema;
 
 pub mod prelude {
