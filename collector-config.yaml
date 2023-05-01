@@ -23,10 +23,15 @@ exporters:
     verbosity: basic
     sampling_initial: 2
     sampling_thereafter: 500
+  otlp/jaeger:
+    endpoint: "localhost:14317"
+    tls:
+      insecure: true
+    
 
 service:
   pipelines:
     traces:
       receivers: [otlp]
       processors: [memory_limiter, resourcedetection, batch]
-      exporters: [logging]
+      exporters: [logging, otlp/jaeger]

@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "rest"
+version = "0.1.0"
+description = ""
+authors = ["Your Name <you@example.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.8"
+opentelemetry-api = "^1.17.0"
+opentelemetry-sdk = "^1.17.0"
+opentelemetry-instrumentation-fastapi = "^0.38b0"
+opentelemetry-exporter-otlp = "^1.17.0"
+opentelemetry-sdk-extension-aws = "^2.0.1"
+fastapi = "^0.95.1"
+uvicorn = "^0.22.0"
+opentelemetry-semantic-conventions = "^0.38b0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

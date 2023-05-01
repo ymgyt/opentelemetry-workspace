@@ -2,28 +2,26 @@
 
 ## TODO
 
-- [ ] otel-layer
-- [ ] collector-contirb submodule
-- [ ] collector
-- [ ] collector logging
-- [ ] signoz
 - [ ] python
 - [ ] context propagation
 - [ ] X-Ray id generator
-- [ ] goose
 - [ ] Sampling
 - [ ] Overview image
 
 ## Usage
 
 ```sh
-# Run graphql server
-cargo make graphql:run
+# Run jaeger
+cargo make jaeger:run
 
 # Run opentelemetry-collector-contrib
 cargo make collector:run
+
+# Run graphql server
+cargo make graphql:run
 ```
 
+Jaeger UI: `localhost:16686`
 
 ## Tasks
 
@@ -42,8 +40,9 @@ Update graphql schema.
 Generate rust client code from schema and query.
 
 
-### `cargo make request:scenario`
+### `cargo make request:{graphql,rest}`
 
 Run loadtest scenario once.  use `SCENARIO` environment variable to specify target scenario.  
 
-`cargo make --env SCENARIO=Hello request:scenario`
+`cargo make --env SCENARIO=hello request:graphql`  
+`cargo make --env=SCENARIO=foo request:rest`
