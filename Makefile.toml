@@ -8,6 +8,11 @@ GRAPHQL_GENERATE_PATH = "${GRAPHQL_CLIENT_PROJECT}/src/generated"
 
 REST_HOST = "http://localhost:8001"
 
+[tasks."init"]
+run_task = [
+  { name = "rest:init" }
+]
+
 [tasks."graphql:run"]
 cwd = "rust/graphql"
 command = "cargo"
@@ -75,9 +80,19 @@ args = [
   "jaegertracing/all-in-one:1.44",
 ]
 
+[tasks."rest:init"]
+cwd = "python/rest"
+command = "poetry"
+args = [ "install" ]
+
 [tasks."rest:run"]
 cwd = "python/rest"
 command = "poetry"
 args = [
   "run", "python", "main.py"
 ]
+
+[tasks."ui:run"]
+cwd = "typescript/ui"
+command = "yarn"
+args = ["dev"]

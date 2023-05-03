@@ -1,0 +1,44 @@
+{
+  "name": "ui",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "preview": "vite preview",
+    "generate": "graphql-codegen"
+  },
+  "dependencies": {
+    "@apollo/client": "^3.7.13",
+    "@chakra-ui/react": "^2.6.1",
+    "@emotion/react": "^11.10.8",
+    "@emotion/styled": "^11.10.8",
+    "@opentelemetry/api": "^1.4.1",
+    "@opentelemetry/context-zone": "^1.12.0",
+    "@opentelemetry/exporter-trace-otlp-proto": "^0.38.0",
+    "@opentelemetry/instrumentation-document-load": "^0.32.1",
+    "@opentelemetry/resources": "^1.12.0",
+    "@opentelemetry/sdk-trace-web": "^1.12.0",
+    "@opentelemetry/semantic-conventions": "^1.12.0",
+    "framer-motion": "^10.12.7",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@graphql-codegen/cli": "^3.3.1",
+    "@graphql-codegen/client-preset": "^3.0.1",
+    "@types/react": "^18.0.28",
+    "@types/react-dom": "^18.0.11",
+    "@typescript-eslint/eslint-plugin": "^5.57.1",
+    "@typescript-eslint/parser": "^5.57.1",
+    "@vitejs/plugin-react": "^4.0.0",
+    "eslint": "^8.38.0",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-react-refresh": "^0.3.4",
+    "graphql": "^16.6.0",
+    "typescript": "^5.0.4",
+    "vite": "^4.3.2"
+  }
+}

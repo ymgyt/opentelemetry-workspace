@@ -1,11 +1,29 @@
 # Opentelemetry workspace
 
+## Setup
+
+```sh
+git clone --recursive https://github.com/ymgyt/opentelemetry-workspace.git
+```
+
+We use 
+ * [cargo-make](https://github.com/sagiegurari/cargo-make) as a task runner 
+ * [poetry](https://python-poetry.org/docs/) as python dependency management
+
+```sh
+# Install cargo-make
+cargo install cargo-make
+
+# Install poetry
+curl -sSL https://install.python-poetry.org | python3 -
+```
+
+
 ## TODO
 
-- [ ] python
-- [ ] context propagation
-- [ ] X-Ray id generator
-- [ ] Sampling
+- [ ] Init task
+  - submodule update
+  - ui
 - [ ] Overview image
 
 ## Usage
@@ -19,9 +37,13 @@ cargo make collector:run
 
 # Run graphql server
 cargo make graphql:run
+
+# Run ui
+cargo make ui:run
 ```
 
 Jaeger UI: `localhost:16686`
+UI: `localhost:5173`
 
 ## Tasks
 
@@ -45,4 +67,4 @@ Generate rust client code from schema and query.
 Run loadtest scenario once.  use `SCENARIO` environment variable to specify target scenario.  
 
 `cargo make --env SCENARIO=hello request:graphql`  
-`cargo make --env=SCENARIO=foo request:rest`
+`cargo make --env SCENARIO=foo request:rest`

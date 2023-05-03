@@ -54,7 +54,11 @@ fn tracer(
 fn app() -> Router {
     use async_graphql::{extensions::Tracing, EmptyMutation, EmptySubscription, Schema};
     use axum::routing::{get, post};
-    use tower_http::trace::{DefaultMakeSpan, TraceLayer};
+    use http::{header, Method};
+    use tower_http::{
+        cors::{self, CorsLayer},
+        trace::{DefaultMakeSpan, TraceLayer},
+    };
 
     let rest_client = client::RestClient::new();
 
@@ -64,7 +68,13 @@ fn app() -> Router {
         .finish();
 
     let middleware = tower::ServiceBuilder::new()
-        .layer(TraceLayer::new_for_http().make_span_with(DefaultMakeSpan::new()));
+        .layer(TraceLayer::new_for_http().make_span_with(DefaultMakeSpan::new()))
+        .layer(
+            CorsLayer::new()
+                .allow_headers([header::CONTENT_TYPE])
+                .allow_origin(cors::Any)
+                .allow_methods([Method::GET, Method::POST]),
+        );
 
     Router::new()
         .route("/health_check", get(handlers::health_check))

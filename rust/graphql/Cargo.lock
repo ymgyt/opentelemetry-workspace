@@ -597,6 +597,7 @@ dependencies = [
  "async-graphql",
  "async-graphql-axum",
  "axum",
+ "http",
  "opentelemetry",
  "opentelemetry-otlp",
  "opentelemetry-semantic-conventions",
