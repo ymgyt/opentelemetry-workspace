@@ -16,8 +16,9 @@ cargo install cargo-make
 
 # Install poetry
 curl -sSL https://install.python-poetry.org | python3 -
-```
 
+cargo make _init
+```
 
 ## TODO
 

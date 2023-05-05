@@ -1,5 +1,6 @@
 use axum::Extension;
 use axum::Router;
+use graphql::trace_layer;
 use graphql::{client, handlers, otel, prelude::*, schema::QueryRoot};
 
 fn init_subscriber() {
@@ -54,11 +55,11 @@ fn tracer(
 fn app() -> Router {
     use async_graphql::{extensions::Tracing, EmptyMutation, EmptySubscription, Schema};
     use axum::routing::{get, post};
-    use http::{header, Method};
-    use tower_http::{
-        cors::{self, CorsLayer},
-        trace::{DefaultMakeSpan, TraceLayer},
+    use http::{
+        header::{self, HeaderName},
+        Method,
     };
+    use tower_http::cors::{self, CorsLayer};
 
     let rest_client = client::RestClient::new();
 
@@ -67,11 +68,18 @@ fn app() -> Router {
         .data(rest_client)
         .finish();
 
+    // ServiceBuilder top to bottom
+    // https://docs.rs/axum/latest/axum/middleware/index.html
     let middleware = tower::ServiceBuilder::new()
-        .layer(TraceLayer::new_for_http().make_span_with(DefaultMakeSpan::new()))
+        .layer(trace_layer::trace_layer())
         .layer(
             CorsLayer::new()
-                .allow_headers([header::CONTENT_TYPE])
+                .allow_headers([
+                    header::CONTENT_TYPE,
+                    // W3C context trace propagator headers
+                    HeaderName::from_static("traceparent"),
+                    HeaderName::from_static("tracestate"),
+                ])
                 .allow_origin(cors::Any)
                 .allow_methods([Method::GET, Method::POST]),
         );

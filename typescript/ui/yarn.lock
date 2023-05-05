@@ -2115,6 +2115,17 @@
   resolved "https://registry.yarnpkg.com/@opentelemetry/api/-/api-1.4.1.tgz#ff22eb2e5d476fbc2450a196e40dd243cc20c28f"
   integrity sha512-O2yRJce1GOc6PAy3QxFM4NzFiWzvScDC1/5ihYBL6BUEVdq0XMWN01sppE+H6bBXbaFYipjwFLEWLg5PaSOThA==
 
+"@opentelemetry/auto-instrumentations-web@^0.32.1":
+  version "0.32.1"
+  resolved "https://registry.yarnpkg.com/@opentelemetry/auto-instrumentations-web/-/auto-instrumentations-web-0.32.1.tgz#38ecef3480766a8c7161e3c3022ca3162bd96f0e"
+  integrity sha512-CXjabr1MsrWJ0OvUDB/4/IBCvBOL80jOAugXlK4cySvT6JuZiyDucrd0nH+WTU/mOzrEt9praTBV4HvtSlsmVg==
+  dependencies:
+    "@opentelemetry/instrumentation" "^0.38.0"
+    "@opentelemetry/instrumentation-document-load" "^0.32.1"
+    "@opentelemetry/instrumentation-fetch" "^0.38.0"
+    "@opentelemetry/instrumentation-user-interaction" "^0.32.2"
+    "@opentelemetry/instrumentation-xml-http-request" "^0.38.0"
+
 "@opentelemetry/context-zone-peer-dep@1.12.0":
   version "1.12.0"
   resolved "https://registry.yarnpkg.com/@opentelemetry/context-zone-peer-dep/-/context-zone-peer-dep-1.12.0.tgz#4e5e8d625fc9990c63083e61be1c83ea28ea6732"
@@ -2158,7 +2169,36 @@
     "@opentelemetry/sdk-trace-web" "^1.8.0"
     "@opentelemetry/semantic-conventions" "^1.0.0"
 
-"@opentelemetry/instrumentation@^0.38.0":
+"@opentelemetry/instrumentation-fetch@^0.38.0":
+  version "0.38.0"
+  resolved "https://registry.yarnpkg.com/@opentelemetry/instrumentation-fetch/-/instrumentation-fetch-0.38.0.tgz#1dd9ad0825460313777639e5e7d9971aab246f89"
+  integrity sha512-uVHwXPGrJC2L15rj9iCvM678s6cjTJjq/1jppPQX7M6Gi45V5Uc3jaC9YGhozly4j/6dkwfv7nevIqOuPmqNSg==
+  dependencies:
+    "@opentelemetry/core" "1.12.0"
+    "@opentelemetry/instrumentation" "0.38.0"
+    "@opentelemetry/sdk-trace-web" "1.12.0"
+    "@opentelemetry/semantic-conventions" "1.12.0"
+
+"@opentelemetry/instrumentation-user-interaction@^0.32.2":
+  version "0.32.2"
+  resolved "https://registry.yarnpkg.com/@opentelemetry/instrumentation-user-interaction/-/instrumentation-user-interaction-0.32.2.tgz#8135b4126890c22dfab1a597b182ddd073e107fd"
+  integrity sha512-fAc8w0KywcR4jBFFudoI6Wrb87oLt3i0oLEe0yC+01qui6XNCIH3FzpWs10Dwo+eDMyqNjIX/PLDkW3N4EJoYA==
+  dependencies:
+    "@opentelemetry/core" "^1.8.0"
+    "@opentelemetry/instrumentation" "^0.38.0"
+    "@opentelemetry/sdk-trace-web" "^1.8.0"
+
+"@opentelemetry/instrumentation-xml-http-request@^0.38.0":
+  version "0.38.0"
+  resolved "https://registry.yarnpkg.com/@opentelemetry/instrumentation-xml-http-request/-/instrumentation-xml-http-request-0.38.0.tgz#c2b2e725525b8b08dca526b91ba0ef88c4b83234"
+  integrity sha512-8rsnFpCK5kZwvduJa2C/9uIE+SsFSwC+Wz8grKzlIYmrevvdejzOD0kJRZo9twk4Z0Nwf3Anaf3Mejl0n02Hfw==
+  dependencies:
+    "@opentelemetry/core" "1.12.0"
+    "@opentelemetry/instrumentation" "0.38.0"
+    "@opentelemetry/sdk-trace-web" "1.12.0"
+    "@opentelemetry/semantic-conventions" "1.12.0"
+
+"@opentelemetry/instrumentation@0.38.0", "@opentelemetry/instrumentation@^0.38.0":
   version "0.38.0"
   resolved "https://registry.yarnpkg.com/@opentelemetry/instrumentation/-/instrumentation-0.38.0.tgz#e97c6d4ea699006ec2541fd83b26a10f0edaada4"
   integrity sha512-wr1WkIbzHGV+oz6SCme88D2c+zNG23COkCjcida8b3jIzX2lJafOpEHPDcbBF38F8ChkRSj/tVnx1wnYAXZvbA==
@@ -2193,6 +2233,11 @@
     "@opentelemetry/sdk-metrics" "1.12.0"
     "@opentelemetry/sdk-trace-base" "1.12.0"
 
+"@opentelemetry/propagator-ot-trace@^0.26.2":
+  version "0.26.2"
+  resolved "https://registry.yarnpkg.com/@opentelemetry/propagator-ot-trace/-/propagator-ot-trace-0.26.2.tgz#85446be98af3945c7feb75e6f9c5a3139d28d009"
+  integrity sha512-yABHr8QIjJBFPuRivzMtwunRrcv+ZVaaosvfTmfEx6ZQQ66d5C8ddZsEDVsr7fdLQO8/FZuwOItxYWjie69dzA==
+
 "@opentelemetry/resources@1.12.0", "@opentelemetry/resources@^1.12.0":
   version "1.12.0"
   resolved "https://registry.yarnpkg.com/@opentelemetry/resources/-/resources-1.12.0.tgz#895394c727dc3e7e51d1d2cc50907ec07a626dca"
@@ -2219,7 +2264,7 @@
     "@opentelemetry/resources" "1.12.0"
     "@opentelemetry/semantic-conventions" "1.12.0"
 
-"@opentelemetry/sdk-trace-web@^1.12.0", "@opentelemetry/sdk-trace-web@^1.8.0":
+"@opentelemetry/sdk-trace-web@1.12.0", "@opentelemetry/sdk-trace-web@^1.12.0", "@opentelemetry/sdk-trace-web@^1.8.0":
   version "1.12.0"
   resolved "https://registry.yarnpkg.com/@opentelemetry/sdk-trace-web/-/sdk-trace-web-1.12.0.tgz#400511122d952a4a6bc9aeb2492d2acc00caa98e"
   integrity sha512-i89anQYHSOamzXEkoMh2xr0Ms8qTQ9dseqHOTBUMOqCVxwj18DJFJC7TwNtVliusZQ0hAbnsPG+V5+/67aNmFg==

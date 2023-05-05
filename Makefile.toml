@@ -8,7 +8,9 @@ GRAPHQL_GENERATE_PATH = "${GRAPHQL_CLIENT_PROJECT}/src/generated"
 
 REST_HOST = "http://localhost:8001"
 
-[tasks."init"]
+# init task is reserved task
+# https://github.com/sagiegurari/cargo-make#init-and-end-tasks
+[tasks."_init"]
 run_task = [
   { name = "rest:init" }
 ]
