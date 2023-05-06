@@ -1,5 +1,9 @@
 # Opentelemetry workspace
 
+Repository for play with Opentelemetry SDKs for each language
+
+![Project overview](./project_overview.png)
+
 ## Setup
 
 ```sh
@@ -25,10 +29,6 @@ curl -sSL https://install.python-poetry.org | python3 -
 cargo make project:init
 ```
 
-## TODO
-
-- [ ] Overview image
-
 ## Usage
 
 ```sh
@@ -45,7 +45,7 @@ cargo make graphql:run
 cargo make ui:run
 ```
 
-Jaeger UI: `localhost:16686`
+Jaeger UI: `localhost:16686`  
 UI: `localhost:5173`
 
 ## Tasks
