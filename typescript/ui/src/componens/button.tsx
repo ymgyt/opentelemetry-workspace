@@ -35,9 +35,11 @@ const SendButton: FC = ()=>  {
           'custom.xxx': "yyy",
           'custom.yyy': "aaa",
         })
+
+      refetch()
+
       span.end()
     })
-    refetch()
   }
 
   return (
