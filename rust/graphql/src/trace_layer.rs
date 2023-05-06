@@ -44,8 +44,6 @@ impl<B> MakeSpan<B> for MakeSpanImpl {
             propagator.extract(&HeaderExtractor::new(request.headers()))
         });
 
-        tracing::info!("{parent_context:#?}");
-
         use tracing_opentelemetry::OpenTelemetrySpanExt;
 
         span.set_parent(parent_context);
