@@ -7,8 +7,13 @@ git clone --recursive https://github.com/ymgyt/opentelemetry-workspace.git
 ```
 
 We use 
- * [cargo-make](https://github.com/sagiegurari/cargo-make) as a task runner 
- * [poetry](https://python-poetry.org/docs/) as python dependency management
+ * Rust(graphql-server, graphql-client)
+   * [cargo-make](https://github.com/sagiegurari/cargo-make) as a task runner 
+ * Python(rest)
+   * [poetry](https://python-poetry.org/docs/) as python dependency management
+ * Go(opentelemetry-collector)
+ * Node(ui)
+
 
 ```sh
 # Install cargo-make
@@ -17,14 +22,11 @@ cargo install cargo-make
 # Install poetry
 curl -sSL https://install.python-poetry.org | python3 -
 
-cargo make _init
+cargo make project:init
 ```
 
 ## TODO
 
-- [ ] Init task
-  - submodule update
-  - ui
 - [ ] Overview image
 
 ## Usage

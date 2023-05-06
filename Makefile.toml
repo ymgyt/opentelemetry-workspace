@@ -10,9 +10,15 @@ REST_HOST = "http://localhost:8001"
 
 # init task is reserved task
 # https://github.com/sagiegurari/cargo-make#init-and-end-tasks
-[tasks."_init"]
+[tasks."project:init"]
 run_task = [
-  { name = "rest:init" }
+  { name = ["init:submodule", "rest:init", "ui:init"] }
+]
+
+[tasks."init:submodule"]
+command = "git"
+args = [
+  "submodule", "update", "--init", "--recursive"
 ]
 
 [tasks."graphql:run"]
@@ -93,6 +99,11 @@ command = "poetry"
 args = [
   "run", "python", "main.py"
 ]
+
+[tasks."ui:init"]
+cwd = "typescript/ui"
+command = "yarn"
+args = ["install"]
 
 [tasks."ui:run"]
 cwd = "typescript/ui"
