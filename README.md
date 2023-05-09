@@ -38,6 +38,9 @@ cargo make jaeger:run
 # Run opentelemetry-collector-contrib
 cargo make collector:run
 
+# Run rest server
+cargo make rest:run
+
 # Run graphql server
 cargo make graphql:run
 
