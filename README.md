@@ -48,7 +48,8 @@ cargo make graphql:run
 cargo make ui:run
 ```
 
-Jaeger UI: `localhost:16686`  
+Jaeger UI: `localhost:16686` 
+RabbitMQ UI: `localhost:15672`  (guest/guest) 
 UI: `localhost:5173`
 
 ## Tasks

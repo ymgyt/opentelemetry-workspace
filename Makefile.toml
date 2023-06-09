@@ -109,3 +109,15 @@ args = ["install"]
 cwd = "typescript/ui"
 command = "yarn"
 args = ["dev"]
+
+[tasks."queue:run"]
+command = "docker"
+args = [ 
+  "run", "--rm", 
+  "--name", "rabbitmq",
+  "--publish", "5672:5672",
+  "--publish", "15672:15672",
+  "--env", "RABBITMQ_DEFAULT_USER=guest",
+  "--env", "RABBITMQ_DEFAULT_PASS: guest",
+  "rabbitmq:3.9.13-management-alpine",
+]

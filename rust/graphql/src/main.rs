@@ -32,16 +32,19 @@ fn tracer(
                     sampling_ratio,
                 ))))
                 .with_id_generator(opentelemetry::sdk::trace::XrayIdGenerator::default())
-                .with_resource(opentelemetry::sdk::Resource::new([
-                    opentelemetry::KeyValue::new(
-                        opentelemetry_semantic_conventions::resource::SERVICE_NAME,
-                        env!("CARGO_PKG_NAME"),
-                    ),
-                    opentelemetry::KeyValue::new(
-                        opentelemetry_semantic_conventions::resource::SERVICE_VERSION,
-                        env!("CARGO_PKG_VERSION"),
-                    ),
-                ])),
+                .with_resource(opentelemetry::sdk::Resource::from_schema_url(
+                    [
+                        opentelemetry::KeyValue::new(
+                            opentelemetry_semantic_conventions::resource::SERVICE_NAME,
+                            env!("CARGO_PKG_NAME"),
+                        ),
+                        opentelemetry::KeyValue::new(
+                            opentelemetry_semantic_conventions::resource::SERVICE_VERSION,
+                            env!("CARGO_PKG_VERSION"),
+                        ),
+                    ],
+                    "https://opentelemetry.io/schemas/1.20.0",
+                )),
         )
         .with_exporter(
             opentelemetry_otlp::new_exporter()
