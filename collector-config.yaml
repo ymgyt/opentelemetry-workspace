@@ -32,10 +32,18 @@ exporters:
     endpoint: "localhost:14317"
     tls:
       insecure: true
+  otlphttp/openobserve:
+  # Use traces_endpoint instead of endpoint
+    traces_endpoint: http://localhost:5080/api/default/traces
+    tls:
+      insecure: true
+    headers:
+      # Got from UI /web/ingestion/traces/opentelemetry
+      Authorization: "Basic cm9vdEB5bWd5dC5pbzpJVUxEekU1cVN2ZUI0QjNa"
     
 service:
   pipelines:
     traces:
       receivers: [otlp]
       processors: [memory_limiter, resourcedetection, batch]
-      exporters: [logging, otlp/jaeger]
+      exporters: [logging, otlphttp/openobserve]

@@ -18,9 +18,7 @@ fn init_subscriber() {
         .init();
 }
 
-fn tracer(
-    sampling_ratio: f64,
-) -> impl opentelemetry::trace::Tracer + tracing_opentelemetry::PreSampledTracer + 'static {
+fn tracer(sampling_ratio: f64) -> opentelemetry::sdk::trace::Tracer {
     use opentelemetry::sdk::trace::Sampler;
     use opentelemetry_otlp::WithExportConfig;
 

@@ -88,6 +88,18 @@ args = [
   "jaegertracing/all-in-one:1.44",
 ]
 
+[tasks."openobserve:run"]
+command = "docker"
+args = [
+  "run",
+  "--volume", "${PWD}/backend/openobserve/data:/data",
+  "--env", "ZO_DATA_DIR=/data",
+  "--env", "ZO_ROOT_USER_EMAIL=root@ymgyt.io",
+  "--env", "ZO_ROOT_USER_PASSWORD=openobserve",
+  "--publish", "5080:5080",
+  "public.ecr.aws/zinclabs/openobserve:v0.5.0"
+]
+
 [tasks."rest:init"]
 cwd = "python/rest"
 command = "poetry"

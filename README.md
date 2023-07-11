@@ -32,6 +32,9 @@ cargo make project:init
 ## Usage
 
 ```sh
+# Run openobserve
+cargo make openobserve:run
+
 # Run jaeger
 cargo make jaeger:run
 
@@ -48,9 +51,11 @@ cargo make graphql:run
 cargo make ui:run
 ```
 
-Jaeger UI: `localhost:16686` 
-RabbitMQ UI: `localhost:15672`  (guest/guest) 
-UI: `localhost:5173`
+Openobserve UI: `localhost:5080` (root@ymgyt.io/openobserve)
+Jaeger UI: `localhost:16686`  
+RabbitMQ UI: `localhost:15672`  (guest/guest)   
+UI: `localhost:5173`  
+
 
 ## Tasks
 
