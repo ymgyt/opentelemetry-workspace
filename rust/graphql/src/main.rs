@@ -44,6 +44,7 @@ fn tracer(sampling_ratio: f64) -> opentelemetry::sdk::trace::Tracer {
                     "https://opentelemetry.io/schemas/1.20.0",
                 )),
         )
+        .with_batch_config(opentelemetry::sdk::trace::BatchConfig::default())
         .with_exporter(
             opentelemetry_otlp::new_exporter()
                 .tonic()
@@ -97,6 +98,9 @@ async fn main() {
     let _guard = otel::init_opentelemetry();
     init_subscriber();
 
+    foo();
+
+    /*
     let app = app();
 
     let addr = std::net::SocketAddr::from(([127, 0, 0, 1], 8000));
@@ -109,4 +113,10 @@ async fn main() {
         .unwrap();
 
     // TODO: call tracer flush
+    */
+}
+
+#[tracing::instrument]
+fn foo() {
+    info!("foo");
 }
