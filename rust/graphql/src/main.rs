@@ -11,11 +11,27 @@ fn init_subscriber() {
         .and_then(|env| env.parse().ok())
         .unwrap_or(1.0);
 
+    let metrics_layer = tracing_opentelemetry::MetricsLayer::new(metrics_controller());
+
     tracing_subscriber::registry::Registry::default()
         .with(fmt::layer().with_ansi(true))
         .with(filter::LevelFilter::INFO)
         .with(tracing_opentelemetry::layer().with_tracer(tracer(sampling_ratio)))
+        .with(metrics_layer)
         .init();
+}
+
+fn metrics_controller() -> opentelemetry::sdk::metrics::controllers::BasicController {
+    use opentelemetry_otlp::WithExportConfig;
+
+    opentelemetry_otlp::new_pipeline()
+        .metrics()
+        .with_exporter(
+            opentelemetry_otlp::new_exporter()
+            .tonic()
+                .with_endpoint("http://localhost:4317"),
+        )
+    .build().unwrap()
 }
 
 fn tracer(sampling_ratio: f64) -> opentelemetry::sdk::trace::Tracer {
