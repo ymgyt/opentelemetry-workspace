@@ -25,13 +25,18 @@ fn metrics_controller() -> opentelemetry::sdk::metrics::controllers::BasicContro
     use opentelemetry_otlp::WithExportConfig;
 
     opentelemetry_otlp::new_pipeline()
-        .metrics()
+        .metrics(
+            opentelemetry::sdk::metrics::selectors::simple::inexpensive(),
+            opentelemetry::sdk::export::metrics::aggregation::cumulative_temporality_selector(),
+            opentelemetry::runtime::Tokio,
+        )
         .with_exporter(
             opentelemetry_otlp::new_exporter()
-            .tonic()
+                .tonic()
                 .with_endpoint("http://localhost:4317"),
         )
-    .build().unwrap()
+        .build()
+        .unwrap()
 }
 
 fn tracer(sampling_ratio: f64) -> opentelemetry::sdk::trace::Tracer {
@@ -116,6 +121,10 @@ async fn main() {
 
     foo();
 
+    // MeterProvider::shutdown() is not implemented yet in current version(0.19)
+
+    tokio::time::sleep(tokio::time::Duration::from_secs(60)).await;
+
     /*
     let app = app();
 
@@ -134,5 +143,5 @@ async fn main() {
 
 #[tracing::instrument]
 fn foo() {
-    info!("foo");
+    info!(monotonic_counter.foo = 1, key_1 = "value_1", "foo",);
 }

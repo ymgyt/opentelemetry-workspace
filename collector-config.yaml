@@ -39,7 +39,13 @@ exporters:
       insecure: true
     headers:
       # Got from UI /web/ingestion/traces/opentelemetry
-      Authorization: "Basic cm9vdEB5bWd5dC5pbzpJVUxEekU1cVN2ZUI0QjNa"
+      Authorization: "Basic cm9vdEBleGFtcGxlLmNvbTpFSlc0NFJZV2Jod2lodmJZ"
+  prometheusremotewrite/openobserve:
+    endpoint: http://localhost:5080/api/default/prometheus/api/v1/write
+    headers:
+      # Got from UI /ingestion/metrics/otelcollector?org_identifier=default
+      Authorization: Basic cm9vdEBleGFtcGxlLmNvbTpFSlc0NFJZV2Jod2lodmJZ
+    
     
 service:
   pipelines:
@@ -47,3 +53,7 @@ service:
       receivers: [otlp]
       processors: [memory_limiter, resourcedetection, batch]
       exporters: [logging, otlphttp/openobserve]
+    metrics:
+      receivers: [otlp]
+      processors: [memory_limiter, resourcedetection, batch]
+      exporters: [logging, prometheusremotewrite/openobserve]
