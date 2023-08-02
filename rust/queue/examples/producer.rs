@@ -85,6 +85,10 @@ async fn main() -> anyhow::Result<()> {
     let _guard = init_opentelemetry();
     let channel: Channel = queue::channel().await?;
 
+    channel
+        .confirm_select(deadpool_lapin::lapin::options::ConfirmSelectOptions { nowait: false })
+        .await?;
+
     let queue = channel
         .queue_declare(
             QUEUE,
@@ -135,7 +139,8 @@ async fn main() -> anyhow::Result<()> {
             .await?
             .await?;
 
-        assert_eq!(confirm, Confirmation::NotRequested);
+        // assert_eq!(confirm, Confirmation::NotRequested);
+        tracing::info!("{confirm:#?}");
 
         drop(span);
 
