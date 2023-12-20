@@ -11,7 +11,7 @@ fn init_subscriber() {
         .and_then(|env| env.parse().ok())
         .unwrap_or(1.0);
 
-    let metrics_layer = tracing_opentelemetry::MetricsLayer::new(metrics_controller());
+    let metrics_layer = tracing_opentelemetry::MetricsLayer::new(meter_provider());
 
     tracing_subscriber::registry::Registry::default()
         .with(fmt::layer().with_ansi(true))
@@ -21,20 +21,17 @@ fn init_subscriber() {
         .init();
 }
 
-fn metrics_controller() -> opentelemetry::sdk::metrics::controllers::BasicController {
+fn meter_provider() -> opentelemetry::sdk::metrics::MeterProvider {
     use opentelemetry_otlp::WithExportConfig;
 
     opentelemetry_otlp::new_pipeline()
-        .metrics(
-            opentelemetry::sdk::metrics::selectors::simple::inexpensive(),
-            opentelemetry::sdk::export::metrics::aggregation::cumulative_temporality_selector(),
-            opentelemetry::runtime::Tokio,
-        )
+        .metrics(opentelemetry::runtime::Tokio)
         .with_exporter(
             opentelemetry_otlp::new_exporter()
                 .tonic()
                 .with_endpoint("http://localhost:4317"),
         )
+        .with_period(std::time::Duration::from_secs(5))
         .build()
         .unwrap()
 }
